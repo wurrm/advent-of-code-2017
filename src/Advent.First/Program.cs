@@ -1,7 +1,5 @@
 ﻿using System;
 
-using Advent.Helpers;
-
 namespace Advent.First
 {
     class Program
@@ -10,7 +8,7 @@ namespace Advent.First
         {
             if (args.Length != 2)
             {
-                Console.WriteLine("Please specify the number of the part you want to solve followed by your input.");
+                Console.WriteLine("Please specify the number of the part you want to solve (1 or 2) followed by your input.");
                 return 1;
             }
 
@@ -23,12 +21,16 @@ namespace Advent.First
             {
                 case "1":
                     // Part 1
-                    // Only circular aspect needed in this case is checking first digit against last, so we can do it for free here
-                    output = RecurseReverseCaptcha(input, input[input.Length - 1], 0);
+                    output = RecurseReverseCaptcha(input, 1, 0, 0);
                     break;
                 case "2":
                     // Part 2
-                    output = HalfReverseCaptcha(input);
+                    if (input.Length % 2 != 0)
+                    {
+                        Console.WriteLine("Please provide an input with an even number of digits.");
+                        return -1;
+                    }
+                    output = RecurseReverseCaptcha(input, input.Length / 2, 0, 0);
                     break;
                 default:
                     return 1;
@@ -37,28 +39,26 @@ namespace Advent.First
             return 0;
         }
 
-        // Tail recursion because reverse sounds like recurse, and we don't want to vomit calls when we do puzzle input
-        static int RecurseReverseCaptcha(string input, char prevDigit, int repeatSum)
+        // Tail recursion because reverse sounds like recurse, and tails since we don't want to vomit calls when we do the actual puzzle input
+        static int RecurseReverseCaptcha(string input, int step, int index, int repeatSum)
         {
-            char currDigit = input[0];
+            char currDigit = input[index];
+            char nextDigit = input[(index + step) % input.Length];
 
-            if (currDigit == prevDigit)
-                repeatSum += Conversion.CharToInt(currDigit);
+            if (currDigit == nextDigit)
+                repeatSum += (int)char.GetNumericValue(currDigit);
 
-            if (input.Length == 1)
+            if (index == input.Length - 1)
                 return repeatSum;
 
-            return RecurseReverseCaptcha(input.Substring(1, input.Length - 1), currDigit, repeatSum);
+            index++;
+
+            return RecurseReverseCaptcha(input, step, index, repeatSum);
         }
 
         // Not recursion because punting around indexes as args would be a pain and creating our own wrapper etc. seems annoying
         static int HalfReverseCaptcha(string input)
         {
-            if (input.Length % 2 != 0)
-            {
-                Console.WriteLine("Please provide an input with an even number of digits.");
-                return -1;
-            }
 
             int half = input.Length / 2;
             int sum = 0;
@@ -66,7 +66,7 @@ namespace Advent.First
             for (int i = 0; i < half; i++)
             {
                 if (input[i] == input[i + half])
-                    sum += Conversion.CharToInt(input[i]);
+                    sum += (int)char.GetNumericValue(input[i]);
             }
 
             // Learn how this kid make O(n) -> O(n/2) in one simple trick. CS undergrads HATE him!
