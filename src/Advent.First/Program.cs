@@ -15,8 +15,9 @@ namespace Advent.First
             string input = args[1];
             int output;
 
-            // Ideally we'd implement a general solution that takes a "step" as an argument, so we can do however far ahead in the list we please (part 2)
-            // But that would be dumb because why would you over-engineer it that much
+            // There was a comment here about how using a step and creating a general solution would be over-engineering the problem.
+            // There was another about the general recursive implementation being a pain, so I shouldn't bother.
+            // They are gone now.
             switch (args[0])
             {
                 case "1":
@@ -51,12 +52,12 @@ namespace Advent.First
             if (index == input.Length - 1)
                 return repeatSum;
 
-            index++;
-
-            return RecurseReverseCaptcha(input, step, index, repeatSum);
+            return RecurseReverseCaptcha(input, step, index + 1, repeatSum);
         }
 
-        // Not recursion because punting around indexes as args would be a pain and creating our own wrapper etc. seems annoying
+        // The above solution is a valid general algorithm, and semantically all efficient solutions are O(n)
+        // Logically though, part 2 can have the number of elements checked halved, as the sequence of indices is repeated in the second half of the computation
+        // This simple heuristic is shown iteratively below
         static int HalfReverseCaptcha(string input)
         {
 
@@ -69,7 +70,7 @@ namespace Advent.First
                     sum += (int)char.GetNumericValue(input[i]);
             }
 
-            // Learn how this kid make O(n) -> O(n/2) in one simple trick. CS undergrads HATE him!
+            // See how this kid made O(n) -> O(n/2) in one simple trick. CS undergrads HATE him!
             return sum * 2;
         }
     }
