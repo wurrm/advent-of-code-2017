@@ -1,4 +1,4 @@
-# Advent of Code 2017 Challenges
+# FizzBuzz Almighty
 
-My solutions to some fun challenges from the advent of code last year, written
-in C# to brush up on it for an upcoming ~~hackathon~~ MTA exam.
+A collection of programming challenges and otherwise to develop my knowledge of
+languages, paradigms, data structures, algorithms, and being sensible.
