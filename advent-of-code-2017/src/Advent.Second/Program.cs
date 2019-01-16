@@ -18,6 +18,7 @@ namespace Advent.Second
                 return 1;
             }
 
+            // Set function to execute to what user asks for
             CalculateRow fn;
             switch (args[0])
             {
@@ -36,24 +37,30 @@ namespace Advent.Second
             string row;
             List<int> row_checksums = new List<int>();
 
+            // Iterate over rows, obtaining a value from given function on the row
             while ((row = f.ReadLine()) != null)
             {
                 int[] pRow = Array.ConvertAll<string, int>(Regex.Split(row, @"\s+"), int.Parse);
                 row_checksums.Add(fn(pRow));
             }
 
+            // Output answer
             Console.WriteLine(row_checksums.Sum());
             return 0;
         }
 
         static int CalculateRowChecksum(int[] row)
         {
+            // Defined as difference between largest and smallest value in row
             return (row.Max() - row.Min());
         }
 
         static int CalculateRowDivisor(int[] row)
         {
+            // Definied as result of only even division in row
+
             int remainder;
+            // Exhuastively test all pairs of values in row
             for (int i = 0; i < row.Length; i++)
             {
                 for (int j = i + 1; j < row.Length; j++)
@@ -66,6 +73,7 @@ namespace Advent.Second
                 }
             }
 
+            // TODO add exception should this code be reached
             return 0;
         }
     }
