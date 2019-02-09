@@ -1,12 +1,19 @@
+# C
+*.out
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.cache
+
+# C#
+
 *.swp
 *.*~
 project.lock.json
 .DS_Store
-*.pyc
 nupkg/
-
-# Visual Studio Code
-.vscode
 
 # User-specific files
 *.suo
@@ -30,6 +37,3 @@ bld/
 msbuild.log
 msbuild.err
 msbuild.wrn
-
-# Visual Studio 2015
-.vs/
