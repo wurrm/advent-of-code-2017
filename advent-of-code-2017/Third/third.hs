@@ -1,4 +1,4 @@
--- Wizards beware: here be dragons.
+-- Wizards beware: this code sucks.
 
 import System.Environment
 
